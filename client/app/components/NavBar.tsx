@@ -1,35 +1,42 @@
 'use client'
 import React, { useEffect, useRef, useState } from 'react';
 import { gsap } from 'gsap';
+import { useRouter } from 'next/navigation';
 
 const NavBar = () => {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
     };
+    const router = useRouter();
     const app = useRef(null);
-
+    const handleClick = () => {
+        router.push('/text-to-video');
+    };
+    function goto() {
+        setIsMenuOpen(!isMenuOpen)
+        router.push("https://www.linkedin.com/in/shubhankar-shandilya-/")
+    }
     useEffect(() => {
-        let ctx = gsap.context(() => {
-            var tl = gsap.timeline()
+        if (window.location.pathname === '/') {
+            let ctx = gsap.context(() => {
+                var tl = gsap.timeline()
 
-            tl.from(".image,.nav1,.nav2,.nav3,.nav4,.nav5,.bt1", {
-                y: -100,
-                duration: 1,
-                delay: 0.5,
-                opacity: 0,
-                stagger: 0.2,
-            });
-            
+                tl.from(".imaage,.nav1,.nav2,.nav3,.nav4,.nav5,.bt1", {
+                    y: -100,
+                    duration: 1,
+                    delay: 0.5,
+                    opacity: 0,
+                    stagger: 0.2,
+                });
+            }, app);
 
-        }, app);
-
-        return () => ctx.revert();
-
-    }, [])
+            return () => ctx.revert();
+        }
+    }, []);
     return (
         <div className='flex justify-between items-center w-full font-aeonik bg-[#000000bb] p-2 h-[70px] text-white' ref={app}>
-            <a href="/" className=' w-[120px] '><img className='image' src="./pp.png" alt="Logo" /></a>
+            <a href="/" className='imaage w-[120px] '><img className=' image' src="./pp.png" alt="Logo" /></a>
 
             <div className='sm:hidden cursor-pointer' onClick={toggleMenu}>
                 <svg className='mx-6 w-8 h-8 fill-current' viewBox='0 0 24 24'>
@@ -43,19 +50,19 @@ const NavBar = () => {
             <div className='hidden sm:flex justify-center gap-[3vw]'>
                 <a className='nav1' href='/'>Home</a >
                 <a className='nav2' href='/text-to-video'>Services</a >
-                <a className='nav4' href='#aboutus'>About Us</a >
+                <a className='nav4' onClick={goto}>About Us</a >
             </div>
             <div className='mx-6 hidden sm:flex gap-3'>
-                <button  className='bt1 px-4 flex items-center glow-on-hover text-xs sm:text-sm md:text-base '>Register</button>
+                <button onClick={handleClick} className='bt1 h1 px-4 py-2 flex items-center glow-on-hover text-xs sm:text-sm md:text-base '> {"Let's"} Go </button>
             </div>
-            <div className={`sm:hidden   ${isMenuOpen ? 'flex flex-col bg-black p-3 absolute w-full top-20' : 'hidden'} gap-[10px]`}>
+            <div className={`sm:hidden ${isMenuOpen ? 'h-screen flex flex-col bg-black p-3 absolute w-full top-20 z-10 overflow-y-hidden' : 'hidden'} gap-[10px]`}>
                 <a onClick={() => setIsMenuOpen(!isMenuOpen)} className='text-center' href='/'>Home</a>
-                <a onClick={() => setIsMenuOpen(!isMenuOpen)} className='text-center' href='#services'>Services</a>
-                <a onClick={() => setIsMenuOpen(!isMenuOpen)} className='text-center' href='#aboutus'>About Us</a>
+                <a onClick={() => setIsMenuOpen(!isMenuOpen)} className='text-center' href='/text-to-video'>Services</a>
+                <button onClick={goto} className='text-center' >About Us</button>
                 <a onClick={() => setIsMenuOpen(!isMenuOpen)} className='text-center' href='#contactus'>Contact Us</a>
-                <button  className='h-[8vh] glow-on-hover'>Register</button>
+                <button onClick={handleClick} className='text-center bt1 h1 px-6 py-2 glow-on-hover text-sm md:text-base '> {"Let's"} Go </button>
+
             </div>
-            
         </div>
     );
 };

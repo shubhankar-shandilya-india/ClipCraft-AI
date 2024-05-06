@@ -14,21 +14,17 @@ const Hero = () => {
         let ctx = gsap.context(() => {
             var tl = gsap.timeline()
             tl.from(".h1", {
-                delay: 3,
+                delay: 2,
                 y: 100,
                 opacity: 0,
                 stagger: 0.3,
             })
-
-
         }, app);
-
         return () => ctx.revert();
-
     }, [])
     return (
         <div className='flex flex-col items-center mb-9 pb-9' ref={app}>
-            <h1 className="flex mt-8 pt-9 text-white text-4xl sm:leading-none leading-[1.1] sm:text-6xl xl:text-[89px] tracking-[-0.89px] text-center font-extralight">
+            <h1 className="flex mt-8 pt-9 text-white text-4xl sm:leading-none leading-[1.1] sm:text-6xl xl:text-[89px] tracking-[-0.89px] text-center">
                 <br />
                 <span className="flex flex-col items-center">
                     <div className="flex flex-col gap-[2vw]">
