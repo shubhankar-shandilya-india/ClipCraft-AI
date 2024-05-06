@@ -26,31 +26,31 @@ const Home = () => {
   }, [video_presence]);
   const handleClick = async () => {
     setLoading(true);
-    // const encodedParams = new URLSearchParams();
-    // encodedParams.set('text', textRef.current?.value);
-    // encodedParams.set('language_code', "en-US");
-    // encodedParams.set('gender', 'male');
+    const encodedParams = new URLSearchParams();
+    encodedParams.set('text', textRef.current?.value);
+    encodedParams.set('language_code', "en-US");
+    encodedParams.set('gender', 'male');
 
-    // const options = {
-    //   method: 'POST',
-    //   url: 'https://text-to-speech7.p.rapidapi.com/voice',
-    //   headers: {
-    //     'content-type': 'application/x-www-form-urlencoded',
-    //     'X-RapidAPI-Key': '08692a3ed6msh6fd3526f310088ep164996jsn4771d7365688',
-    //     'X-RapidAPI-Host': 'text-to-speech7.p.rapidapi.com'
-    //   },
-    //   data: encodedParams,
-    // };
-    // try {
-    //   const response = await axios.request(options);
-    //   console.log(response.data);
-    //   const url = String(response.data.url);
-    //   console.log(url);
-    //   audioURL = url
-    // } catch (error) {
-    //   console.error(error);
-    //   setLoading(false);
-    // }
+    const options = {
+      method: 'POST',
+      url: 'https://text-to-speech7.p.rapidapi.com/voice',
+      headers: {
+        'content-type': 'application/x-www-form-urlencoded',
+        'X-RapidAPI-Key': process.env.TTS_API_KEY,
+        'X-RapidAPI-Host': 'text-to-speech7.p.rapidapi.com'
+      },
+      data: encodedParams,
+    };
+    try {
+      const response = await axios.request(options);
+      console.log(response.data);
+      const url = String(response.data.url);
+      console.log(url);
+      audioURL = url
+    } catch (error) {
+      console.error(error);
+      setLoading(false);
+    }
     try {
       const response = await axios.post('http://localhost:8080/api/getdata', {
         audio_url: audioURL,
